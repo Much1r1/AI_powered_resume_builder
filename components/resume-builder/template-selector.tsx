@@ -5,6 +5,7 @@ import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Check, Eye } from 'lucide-react'
+import { Description } from '@radix-ui/react-toast'
 
 const templates = [
   {
@@ -38,6 +39,118 @@ const templates = [
     preview: '/api/placeholder/300/400',
     features: ['Minimal Design', 'Content Focus', 'Easy to Read'],
     category: 'Minimal'
+  },
+  {
+    id: 'tech',
+    name: 'Tech Stack',
+    description: 'Developer-focused template with skills showcase',
+    preview: '/api/placeholder/300/400',
+    features: ['GitHub Integration', 'Skills Grid', 'Project Highlights'],
+    category: 'Professional'
+  },
+  {
+    id: 'executive',
+    name: 'Senior Executive',
+    description: 'Sophisticated layout for C-level positions',
+    preview: '/api/placeholder/300/400',
+    features: ['Two Column', 'Leadership Focus', 'Achievement Driven'],
+    category: 'Traditional'
+  },
+  {
+    id: 'academic',
+    name: 'Academic Scholar',
+    description: 'Detailed format for research and academic positions',
+    preview: '/api/placeholder/300/400',
+    features: ['Publications Section', 'Research Focus', 'Citation Ready'],
+    category: 'Traditional'
+  },
+  {
+    id: 'startup',
+    name: 'Startup Innovator',
+    description: 'Dynamic design for fast-paced startup environments',
+    preview: '/api/placeholder/300/400',
+    features: ['Bold Headers', 'Impact Metrics', 'Startup Culture'],
+    category: 'Professional'
+  },
+  {
+    id: 'portfolio',
+    name: 'Portfolio Showcase',
+    description: 'Visual-heavy template for designers and artists',
+    preview: '/api/placeholder/300/400',
+    features: ['Image Gallery', 'Visual Projects', 'Creative Expression'],
+    category: 'Creative'
+  },
+  {
+    id: 'bold',
+    name: 'Bold Impact',
+    description: 'Attention-grabbing design with strong visual hierarchy',
+    preview: '/api/placeholder/300/400',
+    features: ['Strong Typography', 'Color Blocking', 'Stand Out Design'],
+    category: 'Creative'
+  },
+  {
+    id: 'sidebar',
+    name: 'Sidebar Professional',
+    description: 'Two-column layout with sidebar for quick scanning',
+    preview: '/api/placeholder/300/400',
+    features: ['Two Column', 'Easy Scanning', 'Space Efficient'],
+    category: 'Professional'
+  },
+  {
+    id: 'timeline',
+    name: 'Career Timeline',
+    description: 'Chronological layout emphasizing career progression',
+    preview: '/api/placeholder/300/400',
+    features: ['Visual Timeline', 'Career Path', 'Progress Focused'],
+    category: 'Professional'
+  },
+  {
+    id: 'compact',
+    name: 'Compact Efficient',
+    description: 'Maximum information in minimal space',
+    preview: '/api/placeholder/300/400',
+    features: ['Space Saving', 'Dense Layout', 'More Content'],
+    category: 'Minimal'
+  },
+  {
+    id: 'elegant',
+    name: 'Elegant Serif',
+    description: 'Refined typography for sophisticated professionals',
+    preview: '/api/placeholder/300/400',
+    features: ['Serif Fonts', 'Refined Look', 'Classic Elegance'],
+    category: 'Traditional'
+  },
+  {
+    id: 'gradient',
+    name: 'Gradient Modern',
+    description: 'Contemporary design with subtle color gradients',
+    preview: '/api/placeholder/300/400',
+    features: ['Gradient Accents', 'Modern Colors', 'Eye Catching'],
+    category: 'Creative'
+  },
+  {
+    id: 'infographic',
+    name: 'Infographic Style',
+    description: 'Visual resume with charts and graphs',
+    preview: '/api/placeholder/300/400',
+    features: ['Data Visualization', 'Charts & Graphs', 'Visual Stats'],
+    category: 'Creative'
+  },
+  {
+    id: 'simple',
+    name: 'Simply Professional',
+    description: 'No-frills design that lets your experience shine',
+    preview: '/api/placeholder/300/400',
+    features: ['No Distractions', 'Content First', 'Universal Appeal'],
+    category: 'Minimal'
+  },
+  {
+    id: 'magazine',
+    name: 'Magazine Layout',
+    description: 'Editorial-style format with visual hierarchy',
+    preview: '/api/placeholder/300/400',
+    features: ['Magazine Style', 'Visual Sections', 'Editorial Feel'],
+    category: 'Creative'
   }
 ]
 

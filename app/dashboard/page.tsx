@@ -120,7 +120,7 @@ export default function DashboardPage() {
         <div className="flex items-center justify-between mb-8">
           <div>
             <h1 className="text-3xl font-bold text-gray-900">
-              Welcome back, {user.user_metadata?.full_name || user.email}
+              Welcome back, {user.user_metadata?.full_name}
             </h1>
             <p className="text-gray-600 mt-2">
               Manage your resumes and track your job application success

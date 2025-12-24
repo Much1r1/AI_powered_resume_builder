@@ -6,6 +6,7 @@ import { useAuth } from '@/components/auth/auth-provider'
 import { StepIndicator } from '@/components/resume-builder/step-indicator'
 import { PersonalInfoForm } from '@/components/resume-builder/personal-info-form'
 import { WorkExperienceForm } from '@/components/resume-builder/work-experience-form'
+import { SkillsExtrasForm } from '@/components/resume-builder/skills&extras'
 import { TemplateSelector } from '@/components/resume-builder/template-selector'
 import { ResumePreview } from '@/components/resume-builder/resume-preview'
 import { Button } from '@/components/ui/button'
@@ -14,7 +15,8 @@ import { createClient } from '@/lib/supabase'
 
 const steps = [
   { id: 'personal', title: 'Personal Info', completed: false },
-  { id: 'experience', title: 'Experience', completed: false },
+  { id: 'experience', title: 'Experience & Education', completed: false },
+  { id: 'skills', title: 'Skills & Extras', completed: false },
   { id: 'template', title: 'Template', completed: false },
   { id: 'preview', title: 'Preview', completed: false },
 ]
@@ -42,19 +44,29 @@ export default function ResumeBuilderPage() {
   }
 
   const handlePersonalInfoNext = (data: any) => {
-    setFormData(prev => ({ ...prev, personalInfo: data }))
+    setFormData((prev: any) => ({ ...prev, personalInfo: data }))
     updateStepCompletion('personal', true)
     setCurrentStep('experience')
   }
 
   const handleExperienceNext = (data: any) => {
-    setFormData(prev => ({ ...prev, workExperience: data }))
+    setFormData((prev: any) => ({ 
+      ...prev, 
+      experiences: data.experiences,
+      education: data.education 
+    }))
     updateStepCompletion('experience', true)
+    setCurrentStep('skills')
+  }
+
+  const handleSkillsNext = (data: any) => {
+    setFormData((prev: any) => ({ ...prev, skills: data }))
+    updateStepCompletion('skills', true)
     setCurrentStep('template')
   }
 
   const handleTemplateNext = () => {
-    setFormData(prev => ({ ...prev, template: selectedTemplate }))
+    setFormData((prev: any) => ({ ...prev, template: selectedTemplate }))
     updateStepCompletion('template', true)
     setCurrentStep('preview')
   }
@@ -74,10 +86,9 @@ export default function ResumeBuilderPage() {
         title: `${formData.personalInfo?.fullName || 'My'} Resume`,
         template_id: selectedTemplate || 'modern',
         personal_info: formData.personalInfo,
-        work_experience: formData.workExperience,
+        work_experience: formData.experiences,
         education: formData.education,
         skills: formData.skills,
-        projects: formData.projects,
       })
 
     if (!error) {
@@ -130,9 +141,20 @@ export default function ResumeBuilderPage() {
 
           {currentStep === 'experience' && (
             <WorkExperienceForm
-              initialData={formData.workExperience}
+              initialData={{
+                experiences: formData.experiences,
+                education: formData.education
+              }}
               onNext={handleExperienceNext}
               onPrevious={() => setCurrentStep('personal')}
+            />
+          )}
+
+          {currentStep === 'skills' && (
+            <SkillsExtrasForm
+              initialData={formData.skills}
+              onNext={handleSkillsNext}
+              onPrevious={() => setCurrentStep('experience')}
             />
           )}
 
@@ -141,7 +163,7 @@ export default function ResumeBuilderPage() {
               selectedTemplate={selectedTemplate}
               onTemplateSelect={setSelectedTemplate}
               onNext={handleTemplateNext}
-              onPrevious={() => setCurrentStep('experience')}
+              onPrevious={() => setCurrentStep('skills')}
             />
           )}
 
