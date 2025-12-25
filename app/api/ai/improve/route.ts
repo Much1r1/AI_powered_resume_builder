@@ -1,9 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server'
 import OpenAI from 'openai'
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-})
+let openai: OpenAI | null = null
+
+function getOpenAIClient() {
+  if (!openai) {
+    openai = new OpenAI({
+      apiKey: process.env.OPENAI_API_KEY,
+    })
+  }
+  return openai
+}
 
 export async function POST(request: NextRequest) {
   try {
@@ -81,6 +88,64 @@ Return ONLY the improved text, nothing else. No explanations, no markdown, no qu
         userPrompt = `Fix any errors in this text:\n\n"${text}"`
         break
 
+      case 'suggestions':
+        systemPrompt = `You are an expert recruiter and resume coach. Analyze the given resume content and provide 3-5 specific, actionable suggestions to improve it. Format your response as:
+
+SUGGESTIONS:
+• [Suggestion 1 - specific and actionable]
+• [Suggestion 2 - specific and actionable]
+• [Suggestion 3 - specific and actionable]
+• [Suggestion 4 - specific and actionable]
+• [Suggestion 5 - specific and actionable]
+
+Focus on: missing metrics, weak language, impact improvement, and hiring appeal.`
+
+        userPrompt = `Provide improvement suggestions for this resume content:\n\n"${text}"`
+        break
+
+      case 'skills':
+        systemPrompt = `You are an expert career coach. Based on the provided job experience or skills description, recommend 5-8 relevant skills that might be missing. Include both technical and soft skills that would make the resume more competitive. Format as:
+
+MISSING SKILLS:
+• [Skill 1 - why it's relevant]
+• [Skill 2 - why it's relevant]
+• [Skill 3 - why it's relevant]
+• [Skill 4 - why it's relevant]
+• [Skill 5 - why it's relevant]`
+
+        userPrompt = `Based on this role or description, what skills should be added?\n\n"${text}"`
+        break
+
+      case 'certifications':
+        systemPrompt = `You are a career development expert. Based on the job role or industry described, recommend 3-5 relevant certifications or credentials that would strengthen this professional profile. Include why each certification is valuable. Format as:
+
+RECOMMENDED CERTIFICATIONS:
+• [Certification 1 - relevance and value]
+• [Certification 2 - relevance and value]
+• [Certification 3 - relevance and value]
+• [Certification 4 - relevance and value]
+• [Certification 5 - relevance and value]`
+
+        userPrompt = `What certifications would strengthen this profile?\n\n"${text}"`
+        break
+
+      case 'keywords':
+        systemPrompt = `You are an ATS (Applicant Tracking System) expert. Analyze the given resume content and suggest 10-15 high-impact keywords and phrases that should be included to improve ATS compatibility and improve search ranking. Focus on industry-standard terms, technical skills, and power words. Format as:
+
+RECOMMENDED KEYWORDS:
+${Array(12).fill(0).map((_, i) => `• [Keyword ${i + 1}]`).join('\n')}
+
+Return ONLY the keyword list, no explanations.`
+
+        userPrompt = `What keywords should be added to improve this resume's ATS score and visibility?\n\n"${text}"`
+        break
+
+      case 'shorten':
+        systemPrompt = `You are an expert resume writer. Make the given text more concise while keeping all the important information and impact. Aim to reduce length by 30-40% without losing effectiveness. Return ONLY the shortened text.`
+
+        userPrompt = `Make this more concise:\n\n"${text}"`
+        break
+
       default:
         return NextResponse.json(
           { error: 'Invalid action type' },
@@ -88,7 +153,8 @@ Return ONLY the improved text, nothing else. No explanations, no markdown, no qu
         )
     }
 
-    const completion = await openai.chat.completions.create({
+    const client = getOpenAIClient()
+    const completion = await client.chat.completions.create({
       model: 'gpt-4o-mini', // Faster and cheaper, perfect for this use case
       messages: [
         { role: 'system', content: systemPrompt },

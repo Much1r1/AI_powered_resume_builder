@@ -93,10 +93,11 @@ export function AITextImprover({ text, onTextChange, type = 'general' }: AITextI
 
           {!improvedText ? (
             <Tabs defaultValue="improve" className="w-full">
-              <TabsList className="grid w-full grid-cols-3">
+              <TabsList className="grid w-full grid-cols-4">
                 <TabsTrigger value="improve">Improve</TabsTrigger>
                 <TabsTrigger value="tone">Tone</TabsTrigger>
-                <TabsTrigger value="more">More</TabsTrigger>
+                <TabsTrigger value="enhance">Enhance</TabsTrigger>
+                <TabsTrigger value="suggest">Suggest</TabsTrigger>
               </TabsList>
 
               <TabsContent value="improve" className="space-y-2">
@@ -124,11 +125,11 @@ export function AITextImprover({ text, onTextChange, type = 'general' }: AITextI
                   type="button"
                   variant="outline"
                   className="w-full justify-start"
-                  onClick={() => improveText('quantify')}
+                  onClick={() => improveText('shorten')}
                   disabled={loading}
                 >
-                  {loading ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : '📊'}
-                  Add metrics
+                  {loading ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : '✂️'}
+                  Shorten text
                 </Button>
               </TabsContent>
 
@@ -140,6 +141,7 @@ export function AITextImprover({ text, onTextChange, type = 'general' }: AITextI
                   onClick={() => improveText('tone', 'professional')}
                   disabled={loading}
                 >
+                  {loading ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : null}
                   Professional
                 </Button>
                 <Button
@@ -149,6 +151,7 @@ export function AITextImprover({ text, onTextChange, type = 'general' }: AITextI
                   onClick={() => improveText('tone', 'executive')}
                   disabled={loading}
                 >
+                  {loading ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : null}
                   Executive
                 </Button>
                 <Button
@@ -158,6 +161,7 @@ export function AITextImprover({ text, onTextChange, type = 'general' }: AITextI
                   onClick={() => improveText('tone', 'technical')}
                   disabled={loading}
                 >
+                  {loading ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : null}
                   Technical
                 </Button>
                 <Button
@@ -167,11 +171,12 @@ export function AITextImprover({ text, onTextChange, type = 'general' }: AITextI
                   onClick={() => improveText('tone', 'creative')}
                   disabled={loading}
                 >
+                  {loading ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : null}
                   Creative
                 </Button>
               </TabsContent>
 
-              <TabsContent value="more" className="space-y-2">
+              <TabsContent value="enhance" className="space-y-2">
                 <Button
                   type="button"
                   variant="outline"
@@ -186,11 +191,54 @@ export function AITextImprover({ text, onTextChange, type = 'general' }: AITextI
                   type="button"
                   variant="outline"
                   className="w-full justify-start"
-                  onClick={() => improveText('improve')}
+                  onClick={() => improveText('quantify')}
+                  disabled={loading}
+                >
+                  {loading ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : '📊'}
+                  Add metrics
+                </Button>
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="w-full justify-start"
+                  onClick={() => improveText('keywords')}
                   disabled={loading}
                 >
                   {loading ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : '🎯'}
-                  Shorten
+                  ATS keywords
+                </Button>
+              </TabsContent>
+
+              <TabsContent value="suggest" className="space-y-2">
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="w-full justify-start"
+                  onClick={() => improveText('suggestions')}
+                  disabled={loading}
+                >
+                  {loading ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : '💡'}
+                  Get suggestions
+                </Button>
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="w-full justify-start"
+                  onClick={() => improveText('skills')}
+                  disabled={loading}
+                >
+                  {loading ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : '🛠️'}
+                  Missing skills
+                </Button>
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="w-full justify-start"
+                  onClick={() => improveText('certifications')}
+                  disabled={loading}
+                >
+                  {loading ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : '📜'}
+                  Certifications
                 </Button>
               </TabsContent>
             </Tabs>
